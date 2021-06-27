@@ -1,0 +1,80 @@
+
+# resources:
+#   - name: myFirstRepo
+#     type: GitRepo
+#     configuration:
+#       # SCM integration where the repository is located
+#       gitProvider: {{ .Values.myRepo.gitProvider }} # this will be replaced from values.yml
+#       # Repository path, including org name/repo name
+#       path: {{ .Values.myRepo.path }} # this will be replaced from values.yml
+#       branches:
+#         # Specifies which branches will trigger dependent steps
+#         include: master
+#
+#   - name: myPropertyBag
+#     type: PropertyBag
+#     configuration:
+#       commitSha: 1
+#       runID: 1
+
+pipelines:
+  - name: xil_demo_pipeline
+    steps:
+      - name: Step_A
+        type: Bash
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_B
+        type: Bash
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_C
+        type: Bash
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_E
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: Step_A
+            - name: Step_B
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_F
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: Step_C
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_K
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: Step_C
+            - name: Step_E
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+      - name: Step_L
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: Step_K
+            - name: Step_F
+        execution:
+          onExecute:
+            - echo "Hello world"
+
+    
