@@ -47,6 +47,7 @@ pipelines:
         execution:
           onExecute:
             - echo "Hello world"
+            - exit 1
 
       - name: Step_F
         type: Bash
